@@ -1,0 +1,7 @@
+.container{
+    @apply max-w-7xl mx-auto px-2 sm:px-6 lg:px-8
+}
+
+.btn {
+    @apply inline-block text-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-indigo-700
+}
