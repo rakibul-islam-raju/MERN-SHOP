@@ -20,7 +20,7 @@ const cartFormLocalStorage = localStorage.getItem("cart")
 	? JSON.parse(localStorage.getItem("cart"))
 	: [];
 
-const INITIAL_VALUES = {
+const INITIAL_STATE = {
 	cart: {
 		cartItems: cartFormLocalStorage,
 	},
@@ -28,6 +28,7 @@ const INITIAL_VALUES = {
 
 const store = createStore(
 	reducers,
+	INITIAL_STATE,
 	composeWithDevTools(applyMiddleware(...middleware))
 );
 
