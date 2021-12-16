@@ -7,6 +7,8 @@ import {
 	XIcon,
 } from "@heroicons/react/outline";
 
+import { useSelector } from "react-redux";
+
 const navigation = {
 	categories: [
 		{
@@ -143,6 +145,13 @@ function classNames(...classes) {
 
 const Header = ({ showCart, setShowCart }) => {
 	const [open, setOpen] = useState(false);
+
+	const cart = useSelector((state) => state.cart);
+	const { cartItems } = cart;
+
+	const getCartCount = () => {
+		return cartItems.reduce((qty, item) => qty + Number(item.qty), 0);
+	};
 
 	return (
 		<div className="bg-white">
@@ -616,7 +625,7 @@ const Header = ({ showCart, setShowCart }) => {
 											aria-hidden="true"
 										/>
 										<span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-											0
+											{getCartCount()}
 										</span>
 										<span className="sr-only">
 											items in cart, view bag

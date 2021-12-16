@@ -10,7 +10,7 @@ import Cart from "./components/Cart";
 import Footer from "./components/Footer";
 
 const App = () => {
-	const [showCart, setShowCart] = useState(true);
+	const [showCart, setShowCart] = useState(false);
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -19,7 +19,10 @@ const App = () => {
 				<main className="container">
 					<Routes>
 						<Route path="" element={<HomePage />} />
-						<Route path="product/:id" element={<ProductPage />} />
+						<Route
+							path="product/:productId"
+							element={<ProductPage />}
+						/>
 						<Route path="cart" element={<CartPage />} />
 						<Route path="shop" element={<ShopPage />} />
 					</Routes>

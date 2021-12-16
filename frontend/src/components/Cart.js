@@ -1,36 +1,33 @@
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+// tailwind UI
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-
-const products = [
-	{
-		id: 1,
-		name: "Throwback Hip Bag",
-		href: "#",
-		color: "Salmon",
-		price: "$90.00",
-		quantity: 1,
-		imageSrc:
-			"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-		imageAlt:
-			"Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-	},
-	{
-		id: 2,
-		name: "Medium Stuff Satchel",
-		href: "#",
-		color: "Blue",
-		price: "$32.00",
-		quantity: 1,
-		imageSrc:
-			"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-		imageAlt:
-			"Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-	},
-	// More products...
-];
+// actions
+import { removeFromCart, addToCart } from "../redux/actions/cartActions";
 
 const Cart = ({ showCart, setShowCart }) => {
+	const dispatch = useDispatch();
+
+	const cart = useSelector((state) => state.cart);
+	const { cartItems } = cart;
+
+	const qtyChangeHandler = (id, qty) => {
+		dispatch(addToCart(id, qty));
+	};
+
+	const removeFromCartHandler = (id) => {
+		dispatch(removeFromCart(id));
+	};
+
+	const getSubTotal = () => {
+		return cartItems.reduce(
+			(price, item) => item.price * item.qty + price,
+			0
+		);
+	};
+
 	return (
 		<Transition.Root show={showCart} as={Fragment}>
 			<Dialog
@@ -90,69 +87,96 @@ const Cart = ({ showCart, setShowCart }) => {
 										<div className="mt-8">
 											<div className="flow-root">
 												<ul className="-my-6 divide-y divide-gray-200">
-													{products.map((product) => (
-														<li
-															key={product.id}
-															className="py-6 flex"
-														>
-															<div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
-																<img
-																	src={
-																		product.imageSrc
+													{cartItems.length === 0 ? (
+														<h4>
+															Your cart is
+															empty!!!
+														</h4>
+													) : (
+														cartItems.map(
+															(item) => (
+																<li
+																	key={
+																		item.product
 																	}
-																	alt={
-																		product.imageAlt
-																	}
-																	className="w-full h-full object-center object-cover"
-																/>
-															</div>
-
-															<div className="ml-4 flex-1 flex flex-col">
-																<div>
-																	<div className="flex justify-between text-base font-medium text-gray-900">
-																		<h3>
-																			<a
-																				href={
-																					product.href
-																				}
-																			>
-																				{
-																					product.name
-																				}
-																			</a>
-																		</h3>
-																		<p className="ml-4">
-																			{
-																				product.price
+																	className="py-6 flex"
+																>
+																	<div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+																		<img
+																			src={
+																				item.imageUrl
 																			}
-																		</p>
+																			alt={
+																				item.name
+																			}
+																			className="w-full h-full object-center object-cover"
+																		/>
 																	</div>
-																	<p className="mt-1 text-sm text-gray-500">
-																		{
-																			product.color
-																		}
-																	</p>
-																</div>
-																<div className="flex-1 flex items-end justify-between text-sm">
-																	<p className="text-gray-500">
-																		Qty{" "}
-																		{
-																			product.quantity
-																		}
-																	</p>
 
-																	<div className="flex">
-																		<button
-																			type="button"
-																			className="font-medium text-indigo-600 hover:text-indigo-500"
-																		>
-																			Remove
-																		</button>
+																	<div className="ml-4 flex-1 flex flex-col">
+																		<div>
+																			<div className="flex justify-between text-base font-medium text-gray-900">
+																				<h3>
+																					<Link
+																						to={`product/${item._id}`}
+																					>
+																						{
+																							item.name
+																						}
+																					</Link>
+																				</h3>
+																				<p className="ml-4">
+																					${" "}
+																					{
+																						item.price
+																					}
+																				</p>
+																			</div>
+																		</div>
+																		<div className="flex-1 flex items-end justify-between text-sm">
+																			<p className="text-gray-500">
+																				Qty{" "}
+																				<input
+																					onChange={(
+																						e
+																					) =>
+																						qtyChangeHandler(
+																							item.product,
+																							e
+																								.target
+																								.value
+																						)
+																					}
+																					className="w-24 p-1 ml-2 border bg-gray-100 rounded"
+																					value={
+																						item.qty
+																					}
+																					type="number"
+																					min={
+																						1
+																					}
+																				/>
+																			</p>
+
+																			<div className="flex">
+																				<button
+																					onClick={() =>
+																						removeFromCartHandler(
+																							item.product
+																						)
+																					}
+																					type="button"
+																					className="font-medium text-red-600 hover:text-red-500"
+																				>
+																					Remove
+																				</button>
+																			</div>
+																		</div>
 																	</div>
-																</div>
-															</div>
-														</li>
-													))}
+																</li>
+															)
+														)
+													)}
 												</ul>
 											</div>
 										</div>
@@ -161,7 +185,7 @@ const Cart = ({ showCart, setShowCart }) => {
 									<div className="border-t border-gray-200 py-6 px-4 sm:px-6">
 										<div className="flex justify-between text-base font-medium text-gray-900">
 											<p>Subtotal</p>
-											<p>$262.00</p>
+											<p>$ {getSubTotal().toFixed(2)}</p>
 										</div>
 										<p className="mt-0.5 text-sm text-gray-500">
 											Shipping and taxes calculated at
