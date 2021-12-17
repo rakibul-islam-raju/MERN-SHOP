@@ -1,11 +1,6 @@
 import { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
-import {
-	MenuIcon,
-	SearchIcon,
-	ShoppingBagIcon,
-	XIcon,
-} from "@heroicons/react/outline";
+import { MenuIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
