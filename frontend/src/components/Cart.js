@@ -118,7 +118,7 @@ const Cart = ({ showCart, setShowCart }) => {
 																			<div className="flex justify-between text-base font-medium text-gray-900">
 																				<h3>
 																					<Link
-																						to={`product/${item._id}`}
+																						to={`product/${item.product}`}
 																					>
 																						{
 																							item.name
@@ -202,8 +202,8 @@ const Cart = ({ showCart, setShowCart }) => {
 										<div className="mt-6 flex justify-center text-sm text-center text-gray-500">
 											<p>
 												or{" "}
-												<button
-													type="button"
+												<Link
+													to="/"
 													className="text-indigo-600 font-medium hover:text-indigo-500"
 													onClick={() =>
 														setShowCart(false)
@@ -214,7 +214,7 @@ const Cart = ({ showCart, setShowCart }) => {
 														{" "}
 														&rarr;
 													</span>
-												</button>
+												</Link>
 											</p>
 										</div>
 									</div>

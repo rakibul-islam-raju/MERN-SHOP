@@ -99,11 +99,11 @@ const HomePage = () => {
 					Our Latest Products
 				</h4>
 				<ProductsList />
-				<div className="flex justify-center">
+				{/* <div className="flex justify-center">
 					<a href="/" className="btn">
 						All Products
 					</a>
-				</div>
+				</div> */}
 			</section>
 		</>
 	);

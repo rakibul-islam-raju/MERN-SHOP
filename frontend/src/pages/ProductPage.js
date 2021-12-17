@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // actions
 import { getProductDetails } from "../redux/actions/productActions";
 import { addToCart } from "../redux/actions/cartActions";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductPage = () => {
 	const [qty, setQty] = useState(1);
@@ -24,10 +26,20 @@ const ProductPage = () => {
 
 	const addToCartHandler = () => {
 		dispatch(addToCart(product._id, qty));
+		toast.custom((t) => (
+			<div
+				className={`bg-indigo-500 text-white px-6 py-4 shadow-2xl rounded ${
+					t.visible ? "animate-enter" : "animate-leave"
+				}`}
+			>
+				Product added to cart!
+			</div>
+		));
 	};
 
 	return (
 		<>
+			<Toaster />
 			<section className="text-gray-600 body-font overflow-hidden">
 				{loading ? (
 					<h2>Loading...</h2>

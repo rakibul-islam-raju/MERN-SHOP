@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/outline";
 
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const navigation = {
 	categories: [
@@ -134,8 +135,7 @@ const navigation = {
 		},
 	],
 	pages: [
-		{ name: "Company", href: "#" },
-		{ name: "Stores", href: "#" },
+		// { name: "Stores", href: "#" },
 	],
 };
 
@@ -389,14 +389,14 @@ const Header = ({ showCart, setShowCart }) => {
 
 							{/* Logo */}
 							<div className="ml-4 flex lg:ml-0">
-								<a href="#/">
+								<Link to="/">
 									<span className="sr-only">Workflow</span>
 									<img
 										className="h-8 w-auto"
 										src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
 										alt=""
 									/>
-								</a>
+								</Link>
 							</div>
 
 							{/* Flyout menus */}
@@ -563,7 +563,7 @@ const Header = ({ showCart, setShowCart }) => {
 
 							<div className="ml-auto flex items-center">
 								<div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-									<a
+									{/* <a
 										href="#/"
 										className="text-sm font-medium text-gray-700 hover:text-gray-800"
 									>
@@ -578,7 +578,7 @@ const Header = ({ showCart, setShowCart }) => {
 										className="text-sm font-medium text-gray-700 hover:text-gray-800"
 									>
 										Create account
-									</a>
+									</a> */}
 								</div>
 
 								<div className="hidden lg:ml-8 lg:flex">
@@ -601,7 +601,7 @@ const Header = ({ showCart, setShowCart }) => {
 								</div>
 
 								{/* Search */}
-								<div className="flex lg:ml-6">
+								{/* <div className="flex lg:ml-6">
 									<a
 										href="#/"
 										className="p-2 text-gray-400 hover:text-gray-500"
@@ -612,7 +612,7 @@ const Header = ({ showCart, setShowCart }) => {
 											aria-hidden="true"
 										/>
 									</a>
-								</div>
+								</div> */}
 
 								{/* Cart */}
 								<div className="ml-4 flow-root lg:ml-6">
