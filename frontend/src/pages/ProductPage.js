@@ -6,6 +6,7 @@ import { getProductDetails } from "../redux/actions/productActions";
 import { addToCart } from "../redux/actions/cartActions";
 
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "../components/Loader";
 
 const ProductPage = () => {
 	const [qty, setQty] = useState(1);
@@ -42,7 +43,7 @@ const ProductPage = () => {
 			<Toaster />
 			<section className="text-gray-600 body-font overflow-hidden">
 				{loading ? (
-					<h2>Loading...</h2>
+					<Loader />
 				) : error ? (
 					<h2>{error}</h2>
 				) : (

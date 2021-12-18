@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // actions
 import { getProducts as listProducts } from "../redux/actions/productActions";
+import Loader from "./Loader";
+import ErrorMessage from "./ErrorMessage";
 
 const ProductsList = () => {
 	const dispatch = useDispatch();
@@ -19,13 +21,13 @@ const ProductsList = () => {
 			<div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 				<h2 className="sr-only">Products</h2>
 
-				<div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-					{loading ? (
-						<h2>Loading...</h2>
-					) : error ? (
-						<h2>{error}</h2>
-					) : (
-						products.map((product) => (
+				{loading ? (
+					<Loader />
+				) : error ? (
+					<ErrorMessage text="Error message" />
+				) : (
+					<div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+						{products.map((product) => (
 							<Link
 								key={product._id}
 								to={`product/${product._id}`}
@@ -45,9 +47,9 @@ const ProductsList = () => {
 									$ {product.price}
 								</p>
 							</Link>
-						))
-					)}
-				</div>
+						))}
+					</div>
+				)}
 			</div>
 		</>
 	);
